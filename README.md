@@ -1,15 +1,37 @@
-# Mini RAG - Master 2 MD5
+# Mini RAG – Master 2 MD5
 
-## Description
+## Présentation
 
-Ce projet est une implémentation d'un système **Retrieval-Augmented Generation (RAG)** réalisée dans le cadre du mini-TP du Master 2 MD5.
+Ce projet est une implémentation d'un **Retrieval-Augmented Generation (RAG)** réalisée dans le cadre du mini-TP du Master 2 MD5 – Data & IA.
 
-Le système repose sur :
+Le système repose sur une base vectorielle persistante construite avec **ChromaDB**, des embeddings générés par **Sentence Transformers**, un modèle de génération **Groq**, ainsi qu'un agent de modération chargé de détecter les tentatives de prompt injection.
 
-* ChromaDB pour la base vectorielle persistante
-* Sentence Transformers pour les embeddings
-* Groq comme modèle de génération
-* Un agent de modération détectant les tentatives de prompt injection
+---
+
+## Architecture
+
+```text
+Utilisateur
+      │
+      ▼
+Agent modérateur
+      │
+      ├── Injection détectée → Refus
+      │
+      ▼
+Recherche vectorielle (ChromaDB)
+      │
+      ▼
+Chunks les plus pertinents
+      │
+      ▼
+Groq (LLM)
+      │
+      ▼
+Réponse finale
+```
+
+---
 
 ## Structure du projet
 
@@ -30,6 +52,19 @@ mini_rag/
 └── 05_corpus_rag.csv
 ```
 
+---
+
+## Technologies utilisées
+
+* Python 3.11
+* ChromaDB
+* Sentence Transformers
+* Groq API
+* python-dotenv
+* Pandas
+
+---
+
 ## Installation
 
 Créer un environnement virtuel :
@@ -38,7 +73,7 @@ Créer un environnement virtuel :
 python -m venv venv
 ```
 
-Activation sous Windows :
+L'activer sous Windows :
 
 ```bash
 venv\Scripts\activate
@@ -56,33 +91,49 @@ Créer un fichier `.env` contenant :
 GROQ_API_KEY=VOTRE_CLE_API
 ```
 
+---
+
 ## Construction de la base vectorielle
+
+Indexer le corpus :
 
 ```bash
 python build_index.py
 ```
 
-Cette commande crée la base ChromaDB persistante à partir du corpus CSV.
+Cette commande crée une base vectorielle ChromaDB persistante à partir du corpus CSV.
 
-## Lancement
+---
+
+## Lancement du projet
 
 ```bash
 python main.py
 ```
 
+---
+
 ## Fonctionnalités
 
-* Recherche sémantique dans une base vectorielle
-* Génération de réponses avec Groq
-* Refus des prompt injections
+* Recherche sémantique dans une base vectorielle persistante
+* Génération de réponses à partir des documents indexés
+* Détection des tentatives de prompt injection
 * Refus des questions hors corpus
 * Détection des contradictions avec la base de connaissances
 
-## Technologies utilisées
+---
 
-* Python 3.11
-* ChromaDB
-* Sentence Transformers
-* Groq API
-* python-dotenv
-* Pandas
+## Tests réalisés
+
+Le système a été validé avec les scénarios suivants :
+
+* Réponse correcte à une question présente dans le corpus.
+* Détection d'une tentative de prompt injection.
+* Refus d'une question hors corpus.
+* Détection d'une contradiction avec les connaissances indexées.
+
+---
+
+## Auteur
+
+Projet réalisé dans le cadre du Master 2 MD5 – Data & IA.
