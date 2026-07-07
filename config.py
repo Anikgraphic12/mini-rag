@@ -30,8 +30,8 @@ CHROMA_PERSIST_PATH = "./chroma_db"
 # Nom de la collection ChromaDB
 COLLECTION_NAME = "corpus_rag"
 
-# Fichier CSV source du corpus (phrases absurdes)
-CORPUS_CSV_PATH = "./05_corpus_rag.csv"
+# Document source utilisé pour construire la base vectorielle
+DOCUMENT_PATH = "./documents/reglement_bordeaux.pdf"
 
 # Nombre de chunks à récupérer à chaque question
 TOP_K_CHUNKS = 3
